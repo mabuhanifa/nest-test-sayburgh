@@ -17,7 +17,7 @@ export class UsersService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} user`;
+    return this.users.find((u) => u.exampleField === id);
   }
 
   update(id: number, updateUserInput: UpdateUserInput) {
