@@ -8,4 +8,4 @@ import { Employee } from './entities/employee.entity';
   imports: [TypeOrmModule.forFeature([Employee])],
   providers: [EmployeeResolver, EmployeeService],
 })
-export class EmployeeModule {}
+export default class EmployeeModule {}

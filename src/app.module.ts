@@ -6,8 +6,8 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
-import { EmployeeModule } from './employee/employee.module';
 import { DataSource } from 'typeorm';
+import EmployeeModule from './employee/employee.module';
 
 @Module({
   imports: [
@@ -28,6 +28,4 @@ import { DataSource } from 'typeorm';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {
-  constructor(private dataSource: DataSource) {}
-}
+export class AppModule {}
