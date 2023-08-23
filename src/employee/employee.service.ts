@@ -52,7 +52,10 @@ export class EmployeeService {
 
   async remove(id: number) {
     const removedEmployee = await this.employeeRepository.delete(id);
-    console.log(removedEmployee);
-    return `Employee with id : ${id} removed`;
+    if (removedEmployee.affected) {
+      return `Employee with id : ${id} removed`;
+    } else {
+      return `Employee with id : ${id} not found`;
+    }
   }
 }
