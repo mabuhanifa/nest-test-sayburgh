@@ -23,7 +23,7 @@ export class ContactInfo {
   @Field(() => Int)
   employeeId: number;
 
-  @OneToOne(() => Employee, (employee) => employee.id)
+  @OneToOne(() => Employee, (employee) => employee.id, { onDelete: 'CASCADE' })
   @JoinColumn()
   employee: Employee;
 }
