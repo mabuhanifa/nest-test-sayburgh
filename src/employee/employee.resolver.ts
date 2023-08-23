@@ -35,7 +35,7 @@ export class EmployeeResolver {
     );
   }
 
-  @Mutation(() => Employee)
+  @Mutation(() => String)
   removeEmployee(@Args('id', { type: () => Int }) id: number) {
     return this.employeeService.remove(id);
   }

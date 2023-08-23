@@ -50,7 +50,9 @@ export class EmployeeService {
     return this.employeeRepository.save(employee);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} employee`;
+  async remove(id: number) {
+    const removedEmployee = await this.employeeRepository.delete(id);
+    console.log(removedEmployee);
+    return `Employee with id : ${id} removed`;
   }
 }
