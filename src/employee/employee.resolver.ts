@@ -9,11 +9,13 @@ export class EmployeeResolver {
   constructor(private readonly employeeService: EmployeeService) {}
 
   @Mutation(() => Employee)
-  createEmployee(@Args('createEmployeeInput') createEmployeeInput: CreateEmployeeInput) {
+  createEmployee(
+    @Args('createEmployeeInput') createEmployeeInput: CreateEmployeeInput,
+  ) {
     return this.employeeService.create(createEmployeeInput);
   }
 
-  @Query(() => [Employee], { name: 'employee' })
+  @Query(() => [Employee], { name: 'employees' })
   findAll() {
     return this.employeeService.findAll();
   }
@@ -24,8 +26,13 @@ export class EmployeeResolver {
   }
 
   @Mutation(() => Employee)
-  updateEmployee(@Args('updateEmployeeInput') updateEmployeeInput: UpdateEmployeeInput) {
-    return this.employeeService.update(updateEmployeeInput.id, updateEmployeeInput);
+  updateEmployee(
+    @Args('updateEmployeeInput') updateEmployeeInput: UpdateEmployeeInput,
+  ) {
+    return this.employeeService.update(
+      updateEmployeeInput.id,
+      updateEmployeeInput,
+    );
   }
 
   @Mutation(() => Employee)

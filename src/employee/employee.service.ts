@@ -20,11 +20,15 @@ export class EmployeeService {
   }
 
   findAll() {
-    return `This action returns all employee`;
+    return this.employeeRepository.find({});
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} employee`;
+    return this.employeeRepository.find({
+      where: {
+        id,
+      },
+    });
   }
 
   update(id: number, updateEmployeeInput: UpdateEmployeeInput) {
