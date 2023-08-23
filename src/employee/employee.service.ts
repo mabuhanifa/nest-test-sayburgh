@@ -37,8 +37,17 @@ export class EmployeeService {
     return employee;
   }
 
-  update(id: number, updateEmployeeInput: UpdateEmployeeInput) {
-    return `This action updates a #${id} employee`;
+  async update(id: number, updateEmployeeInput: UpdateEmployeeInput) {
+    const employee = await this.employeeRepository.findOne({
+      where: {
+        id,
+      },
+    });
+
+    employee.name = updateEmployeeInput.name;
+    employee.email = updateEmployeeInput.email;
+
+    return this.employeeRepository.save(employee);
   }
 
   remove(id: number) {
