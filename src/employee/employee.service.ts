@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateEmployeeInput } from './dto/create-employee.input';
 import { UpdateEmployeeInput } from './dto/update-employee.input';
 import { Repository } from 'typeorm';
@@ -24,11 +24,17 @@ export class EmployeeService {
   }
 
   findOne(id: number) {
-    return this.employeeRepository.find({
+    const employee = this.employeeRepository.findOne({
       where: {
         id,
       },
     });
+
+    if (!employee) {
+      throw new NotFoundException(`Todo with ID ${id} not found`);
+    }
+
+    return employee;
   }
 
   update(id: number, updateEmployeeInput: UpdateEmployeeInput) {
