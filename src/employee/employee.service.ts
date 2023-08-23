@@ -3,11 +3,12 @@ import { CreateEmployeeInput } from './dto/create-employee.input';
 import { UpdateEmployeeInput } from './dto/update-employee.input';
 import { Repository } from 'typeorm';
 import { Employee } from './entities/employee.entity';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class EmployeeService {
   constructor(
-    @Inject()
+    @InjectRepository(Employee)
     private employeeRepository: Repository<Employee>,
   ) {}
 
