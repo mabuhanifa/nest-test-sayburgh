@@ -24,7 +24,7 @@ export class ContactInfoService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} contactInfo`;
+    return this.contactInfoRepository.findOne({ where: { id } });
   }
 
   update(id: number, updateContactInfoInput: UpdateContactInfoInput) {
