@@ -8,7 +8,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { DataSource } from 'typeorm';
 import { ContactInfoModule } from './contact-info/contact-info.module';
-import { TaskModule } from './task/task.module';
 import EmployeeModule from './employee/employee.module';
 
 @Module({
@@ -27,7 +26,6 @@ import EmployeeModule from './employee/employee.module';
     UsersModule,
     EmployeeModule,
     ContactInfoModule,
-    TaskModule,
   ],
   controllers: [AppController],
   providers: [AppService],

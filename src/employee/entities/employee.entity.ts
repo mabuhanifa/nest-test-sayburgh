@@ -1,6 +1,5 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { ContactInfo } from 'src/contact-info/entities/contact-info.entity';
-import { Task } from 'src/task/entities/task.entity';
 import {
   Column,
   Entity,
@@ -24,9 +23,4 @@ export class Employee {
   @Column()
   @Field(() => String)
   email: string;
-
-  @OneToMany(() => Task, (task) => task.employee)
-  @Column()
-  @Field(() => String)
-  tasks: Task[];
 }
