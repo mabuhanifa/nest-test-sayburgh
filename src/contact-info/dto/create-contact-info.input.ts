@@ -1,7 +1,15 @@
 import { InputType, Int, Field } from '@nestjs/graphql';
+import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 @InputType()
 export class CreateContactInfoInput {
-  @Field(() => Int, { description: 'Example field (placeholder)' })
-  exampleField: number;
+  @IsNotEmpty()
+  @IsString()
+  @Field(() => String)
+  phone: string;
+
+  @IsNotEmpty()
+  @IsNumber()
+  @Field(() => Int)
+  employeeId: number;
 }
