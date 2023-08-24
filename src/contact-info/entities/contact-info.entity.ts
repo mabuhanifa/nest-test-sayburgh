@@ -25,5 +25,6 @@ export class ContactInfo {
 
   @OneToOne(() => Employee, (employee) => employee.id, { onDelete: 'CASCADE' })
   @JoinColumn()
+  @Field(() => Employee)
   employee: Employee;
 }
