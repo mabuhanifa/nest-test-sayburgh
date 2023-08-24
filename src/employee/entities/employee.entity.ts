@@ -4,9 +4,7 @@ import { Department } from 'src/department/entities/department.entity';
 import {
   Column,
   Entity,
-  JoinColumn,
   ManyToOne,
-  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';

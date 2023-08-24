@@ -1,7 +1,30 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { Category } from 'src/category/entities/category.entity';
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
-@ObjectType()
+@Entity({ name: 'question' })
+@ObjectType({ description: ' This is Question Object Type' })
 export class Question {
-  @Field(() => Int, { description: 'Example field (placeholder)' })
-  exampleField: number;
+  @PrimaryGeneratedColumn('increment')
+  @Field(() => Int)
+  id: number;
+
+  @Column()
+  @Field(() => String)
+  title: string;
+
+  @Column()
+  @Field(() => String)
+  text: string;
+
+  @ManyToMany(() => Category)
+  @JoinTable()
+  @Field(() => Category)
+  categories: Category[];
 }
