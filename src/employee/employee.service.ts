@@ -4,19 +4,25 @@ import { UpdateEmployeeInput } from './dto/update-employee.input';
 import { Repository } from 'typeorm';
 import { Employee } from './entities/employee.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { DepartmentService } from 'src/department/department.service';
 
 @Injectable()
 export class EmployeeService {
   constructor(
     @InjectRepository(Employee)
     private employeeRepository: Repository<Employee>,
+    private departmentService: DepartmentService,
   ) {}
 
-  create(createEmployeeInput: CreateEmployeeInput) {
+  async create(createEmployeeInput: CreateEmployeeInput) {
     const employee = new Employee();
     employee.name = createEmployeeInput.name;
     employee.email = createEmployeeInput.email;
-    return this.employeeRepository.save(employee);
+    const department = await this.departmentService.findOne(
+      createEmployeeInput.departmentId,
+    );
+    employee.department = department;
+    return await this.employeeRepository.save(employee);
   }
 
   findAll() {

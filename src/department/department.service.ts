@@ -12,16 +12,22 @@ export class DepartmentService {
     private departmentRepository: Repository<Department>,
   ) {}
 
-  create(createDepartmentInput: CreateDepartmentInput) {
-    return 'This action adds a new department';
+  async create(createDepartmentInput: CreateDepartmentInput) {
+    const department = new Department();
+    department.name = createDepartmentInput.name;
+    // department.employees = createDepartmentInput.employees || [];
+
+    return this.departmentRepository.save(department);
   }
 
   findAll() {
     return `This action returns all department`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} department`;
+  async findOne(id: number) {
+    return await this.departmentRepository.findOne({
+      where: { id },
+    });
   }
 
   update(id: number, updateDepartmentInput: UpdateDepartmentInput) {

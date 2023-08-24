@@ -27,9 +27,7 @@ export class Employee {
   @Field(() => String)
   email: string;
 
-  @ManyToOne(() => Department, (department) => department.employees, {
-    nullable: true,
-  })
-  @JoinColumn()
-  department?: Department;
+  @ManyToOne(() => Department)
+  @Field(() => Department)
+  department: Department;
 }

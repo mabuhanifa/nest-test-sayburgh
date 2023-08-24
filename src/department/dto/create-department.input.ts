@@ -1,12 +1,5 @@
 import { InputType, Int, Field } from '@nestjs/graphql';
-import {
-  ArrayNotEmpty,
-  IsArray,
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-} from 'class-validator';
-import { Employee } from 'src/employee/entities/employee.entity';
+import { IsNotEmpty, IsString } from 'class-validator';
 
 @InputType()
 export class CreateDepartmentInput {
@@ -14,10 +7,4 @@ export class CreateDepartmentInput {
   @IsString()
   @Field(() => String)
   name: string;
-
-  @IsOptional()
-  @IsArray()
-  @ArrayNotEmpty()
-  @Field(() => [Int], { nullable: true })
-  employees?: number[];
 }
