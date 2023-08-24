@@ -28,5 +28,5 @@ export class Employee {
   @OneToMany(() => Task, (task) => task.employee)
   @Column()
   @Field(() => String)
-  tasks: string;
+  tasks: Task[];
 }
