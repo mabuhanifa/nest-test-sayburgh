@@ -1,7 +1,13 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @ObjectType()
 export class Category {
-  @Field(() => Int, { description: 'Example field (placeholder)' })
-  exampleField: number;
+  @PrimaryGeneratedColumn('increment')
+  @Field(() => Int)
+  id: number;
+
+  @Column()
+  @Field(() => String)
+  name: string;
 }
