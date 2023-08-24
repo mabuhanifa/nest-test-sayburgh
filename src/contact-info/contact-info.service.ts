@@ -23,8 +23,13 @@ export class ContactInfoService {
     return this.contactInfoRepository.find();
   }
 
-  findOne(id: number) {
-    return this.contactInfoRepository.findOne({ where: { id } });
+  async findOne(id: number) {
+    const contactInfo = await this.contactInfoRepository.findOne({
+      where: { id },
+      relations: ['employee'],
+    });
+    console.log(contactInfo);
+    return contactInfo;
   }
 
   update(id: number, updateContactInfoInput: UpdateContactInfoInput) {
