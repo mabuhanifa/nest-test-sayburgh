@@ -9,6 +9,7 @@ import { DataSource } from 'typeorm';
 import { ContactInfoModule } from './contact-info/contact-info.module';
 import { DepartmentModule } from './department/department.module';
 import { CategoryModule } from './category/category.module';
+import { QuestionModule } from './question/question.module';
 import EmployeeModule from './employee/employee.module';
 
 @Module({
@@ -28,6 +29,7 @@ import EmployeeModule from './employee/employee.module';
     ContactInfoModule,
     DepartmentModule,
     CategoryModule,
+    QuestionModule,
   ],
   controllers: [AppController],
   providers: [AppService],
