@@ -20,7 +20,7 @@ export class ContactInfoService {
   }
 
   findAll() {
-    return `This action returns all contactInfo`;
+    return this.contactInfoRepository.find();
   }
 
   findOne(id: number) {

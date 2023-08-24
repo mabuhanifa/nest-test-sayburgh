@@ -9,11 +9,14 @@ export class ContactInfoResolver {
   constructor(private readonly contactInfoService: ContactInfoService) {}
 
   @Mutation(() => ContactInfo)
-  createContactInfo(@Args('createContactInfoInput') createContactInfoInput: CreateContactInfoInput) {
+  createContactInfo(
+    @Args('createContactInfoInput')
+    createContactInfoInput: CreateContactInfoInput,
+  ) {
     return this.contactInfoService.create(createContactInfoInput);
   }
 
-  @Query(() => [ContactInfo], { name: 'contactInfo' })
+  @Query(() => [ContactInfo], { name: 'contactInfos' })
   findAll() {
     return this.contactInfoService.findAll();
   }
@@ -24,8 +27,14 @@ export class ContactInfoResolver {
   }
 
   @Mutation(() => ContactInfo)
-  updateContactInfo(@Args('updateContactInfoInput') updateContactInfoInput: UpdateContactInfoInput) {
-    return this.contactInfoService.update(updateContactInfoInput.id, updateContactInfoInput);
+  updateContactInfo(
+    @Args('updateContactInfoInput')
+    updateContactInfoInput: UpdateContactInfoInput,
+  ) {
+    return this.contactInfoService.update(
+      updateContactInfoInput.id,
+      updateContactInfoInput,
+    );
   }
 
   @Mutation(() => ContactInfo)
