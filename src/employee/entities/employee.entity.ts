@@ -1,8 +1,11 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { ContactInfo } from 'src/contact-info/entities/contact-info.entity';
+import { Department } from 'src/department/entities/department.entity';
 import {
   Column,
   Entity,
+  JoinColumn,
+  ManyToOne,
   OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
@@ -23,4 +26,10 @@ export class Employee {
   @Column()
   @Field(() => String)
   email: string;
+
+  @ManyToOne(() => Department, (department) => department.employees, {
+    nullable: true,
+  })
+  @JoinColumn()
+  department?: Department;
 }
