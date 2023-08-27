@@ -28,13 +28,11 @@ export class ContactInfoService {
       where: { id },
       relations: ['employee'],
     });
-    console.log(contactInfo);
+
     return contactInfo;
   }
 
-  update(id: number, updateContactInfoInput: UpdateContactInfoInput) {
-    return `This action updates a #${id} contactInfo`;
-  }
+  update(id: number, updateContactInfoInput: UpdateContactInfoInput) {}
 
   remove(id: number) {
     return `This action removes a #${id} contactInfo`;

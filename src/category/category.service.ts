@@ -9,20 +9,20 @@ import { InjectRepository } from '@nestjs/typeorm';
 export class CategoryService {
   constructor(
     @InjectRepository(Category)
-    private contactInfoRepository: Repository<Category>,
+    private categoryRepository: Repository<Category>,
   ) {}
   create(createCategoryInput: CreateCategoryInput) {
     const category = new Category();
     category.name = createCategoryInput.name;
-    return this.contactInfoRepository.save(category);
+    return this.categoryRepository.save(category);
   }
 
   findAll() {
-    return this.contactInfoRepository.find({});
+    return this.categoryRepository.find({});
   }
 
   findOne(id: number) {
-    return this.contactInfoRepository.findOne({
+    return this.categoryRepository.findOne({
       where: {
         id: id,
       },
@@ -30,16 +30,21 @@ export class CategoryService {
   }
 
   async update(id: number, updateCategoryInput: UpdateCategoryInput) {
-    const category = await this.contactInfoRepository.findOne({
+    const category = await this.categoryRepository.findOne({
       where: {
         id: id,
       },
     });
     category.name = updateCategoryInput.name;
-    return this.contactInfoRepository.save(category);
+    return this.categoryRepository.save(category);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} category`;
+  async remove(id: number) {
+    const removedCategory = await this.categoryRepository.delete(id);
+    if (removedCategory.affected) {
+      return `Category with id : ${id} removed`;
+    } else {
+      return `Category with id : ${id} not found`;
+    }
   }
 }
