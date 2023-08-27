@@ -34,6 +34,7 @@ export class EmployeeService {
       where: {
         id,
       },
+      relations: ['department'],
     });
 
     if (!employee) {
