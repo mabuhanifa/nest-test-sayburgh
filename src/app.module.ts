@@ -7,6 +7,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { ContactInfoModule } from './contact-info/contact-info.module';
 import { DepartmentModule } from './department/department.module';
+import { CommunityModule } from './community/community.module';
 import EmployeeModule from './employee/employee.module';
 
 @Module({
@@ -25,6 +26,7 @@ import EmployeeModule from './employee/employee.module';
     EmployeeModule,
     ContactInfoModule,
     DepartmentModule,
+    CommunityModule,
   ],
   controllers: [AppController],
   providers: [AppService],
