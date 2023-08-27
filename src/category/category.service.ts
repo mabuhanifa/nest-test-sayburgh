@@ -29,8 +29,14 @@ export class CategoryService {
     });
   }
 
-  update(id: number, updateCategoryInput: UpdateCategoryInput) {
-    return `This action updates a #${id} category`;
+  async update(id: number, updateCategoryInput: UpdateCategoryInput) {
+    const category = await this.contactInfoRepository.findOne({
+      where: {
+        id: id,
+      },
+    });
+    category.name = updateCategoryInput.name;
+    return this.contactInfoRepository.save(category);
   }
 
   remove(id: number) {
