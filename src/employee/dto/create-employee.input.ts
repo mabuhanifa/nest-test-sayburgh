@@ -1,5 +1,5 @@
 import { InputType, Field, Int } from '@nestjs/graphql';
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 @InputType()
 export class CreateEmployeeInput {
@@ -14,7 +14,7 @@ export class CreateEmployeeInput {
   email: string;
 
   @IsNotEmpty()
-  @IsString()
+  @IsNumber()
   @Field(() => Int)
   departmentId: number;
 }

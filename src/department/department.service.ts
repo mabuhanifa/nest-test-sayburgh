@@ -12,8 +12,6 @@ export class DepartmentService {
     private departmentRepository: Repository<Department>,
   ) {}
 
-  /* -------------------------- createDepartment -------------------------- */
-
   async create(createDepartmentInput: CreateDepartmentInput) {
     const department = new Department();
     department.name = createDepartmentInput.name;
@@ -21,13 +19,9 @@ export class DepartmentService {
     return this.departmentRepository.save(department);
   }
 
-  /* -------------------------- findAllDepartments -------------------------- */
-
   async findAll() {
     return await this.departmentRepository.find({ relations: ['employees'] });
   }
-
-  /* -------------------------- find A Department by ID -------------------------- */
 
   async findOne(id: number) {
     return await this.departmentRepository.findOne({
@@ -36,13 +30,9 @@ export class DepartmentService {
     });
   }
 
-  /* -------------------------- updateDepartment -------------------------- */
-
   update(id: number, updateDepartmentInput: UpdateDepartmentInput) {
     return `This action updates a #${id} department`;
   }
-
-  /* -------------------------- remove a Department by ID -------------------------- */
 
   remove(id: number) {
     return `This action removes a #${id} department`;

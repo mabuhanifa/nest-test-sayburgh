@@ -1,7 +1,23 @@
 import { InputType, Int, Field } from '@nestjs/graphql';
+import { IsNotEmpty, IsString } from 'class-validator';
+import { Column } from 'typeorm';
 
 @InputType()
 export class CreateQuestionInput {
-  @Field(() => Int, { description: 'Example field (placeholder)' })
-  exampleField: number;
+  @IsNotEmpty()
+  @IsString()
+  @Column()
+  @Field(() => String)
+  title: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @Column()
+  @Field(() => String)
+  text: string;
+
+  @IsNotEmpty()
+  @IsString()
+  @Field(() => Int)
+  categoryId: number;
 }
