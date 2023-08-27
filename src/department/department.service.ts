@@ -27,6 +27,7 @@ export class DepartmentService {
   async findOne(id: number) {
     return await this.departmentRepository.findOne({
       where: { id },
+      relations: ['employees'],
     });
   }
 
