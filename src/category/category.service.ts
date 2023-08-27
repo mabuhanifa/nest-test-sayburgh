@@ -1,15 +1,24 @@
 import { Injectable } from '@nestjs/common';
 import { CreateCategoryInput } from './dto/create-category.input';
 import { UpdateCategoryInput } from './dto/update-category.input';
+import { Category } from './entities/category.entity';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class CategoryService {
+  constructor(
+    @InjectRepository(Category)
+    private contactInfoRepository: Repository<Category>,
+  ) {}
   create(createCategoryInput: CreateCategoryInput) {
-    return 'This action adds a new category';
+    const category = new Category();
+    category.name = createCategoryInput.name;
+    return this.contactInfoRepository.save(category);
   }
 
   findAll() {
-    return `This action returns all category`;
+    return this.contactInfoRepository.find({});
   }
 
   findOne(id: number) {
