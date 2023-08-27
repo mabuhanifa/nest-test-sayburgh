@@ -1,7 +1,9 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { PrimaryGeneratedColumn } from 'typeorm';
 
 @ObjectType()
 export class User {
-  @Field(() => Int, { description: 'Example field (placeholder)' })
-  exampleField: number;
+  @PrimaryGeneratedColumn('increment')
+  @Field(() => Int)
+  id: number;
 }
