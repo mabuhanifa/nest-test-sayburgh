@@ -15,13 +15,12 @@ export class DepartmentService {
   async create(createDepartmentInput: CreateDepartmentInput) {
     const department = new Department();
     department.name = createDepartmentInput.name;
-    // department.employees = createDepartmentInput.employees || [];
 
     return this.departmentRepository.save(department);
   }
 
-  findAll() {
-    return `This action returns all department`;
+  async findAll() {
+    return await this.departmentRepository.find({ relations: ['employees'] });
   }
 
   async findOne(id: number) {
