@@ -8,6 +8,7 @@ import { ConfigModule } from '@nestjs/config';
 import { ContactInfoModule } from './contact-info/contact-info.module';
 import { DepartmentModule } from './department/department.module';
 import { CommunityModule } from './community/community.module';
+import { UserModule } from './user/user.module';
 import EmployeeModule from './employee/employee.module';
 
 @Module({
@@ -27,6 +28,7 @@ import EmployeeModule from './employee/employee.module';
     ContactInfoModule,
     DepartmentModule,
     CommunityModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],
