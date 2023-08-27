@@ -22,7 +22,11 @@ export class CategoryService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} category`;
+    return this.contactInfoRepository.findOne({
+      where: {
+        id: id,
+      },
+    });
   }
 
   update(id: number, updateCategoryInput: UpdateCategoryInput) {
