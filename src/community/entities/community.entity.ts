@@ -1,8 +1,15 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { User } from 'src/user/entities/user.entity';
-import { Column, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
-@ObjectType()
+@Entity({ name: 'community' })
+@ObjectType({ description: 'This is community Object Type' })
 export class Community {
   @PrimaryGeneratedColumn('increment')
   @Field(() => Int, { description: 'Example field (placeholder)' })
@@ -13,5 +20,7 @@ export class Community {
   name: string;
 
   @ManyToMany(() => User, (user) => user.communities)
+  @JoinTable()
+  @Field(() => [User])
   user: User[];
 }

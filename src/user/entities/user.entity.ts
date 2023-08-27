@@ -1,8 +1,15 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { Community } from 'src/community/entities/community.entity';
-import { Column, JoinTable, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
-@ObjectType()
+@Entity({ name: 'user' })
+@ObjectType({ description: 'This is User Object Type' })
 export class User {
   @PrimaryGeneratedColumn('increment')
   @Field(() => Int)
