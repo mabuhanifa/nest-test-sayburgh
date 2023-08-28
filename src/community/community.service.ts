@@ -17,11 +17,15 @@ export class CommunityService {
 
   async create(createCommunityInput: CreateCommunityInput) {
     const community = new Community();
+
     community.name = createCommunityInput.name;
+
     const users: User[] = await this.userService.findAllByID(
       createCommunityInput.users,
     );
+
     community.users = users;
+
     return this.communityRepository.save(community);
   }
 

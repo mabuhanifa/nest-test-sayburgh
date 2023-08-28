@@ -9,5 +9,6 @@ import { UserModule } from 'src/user/user.module';
 @Module({
   imports: [TypeOrmModule.forFeature([Community]), UserModule],
   providers: [CommunityResolver, CommunityService],
+  exports: [CommunityService],
 })
 export class CommunityModule {}
