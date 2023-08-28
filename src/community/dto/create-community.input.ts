@@ -1,5 +1,5 @@
 import { InputType, Int, Field } from '@nestjs/graphql';
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 import { User } from 'src/user/entities/user.entity';
 import { Column, ManyToMany } from 'typeorm';
 
@@ -9,4 +9,9 @@ export class CreateCommunityInput {
   @IsString()
   @Field(() => String)
   name: string;
+
+  @IsNotEmpty()
+  @IsNumber()
+  @Field(() => [Int])
+  users: number[];
 }
