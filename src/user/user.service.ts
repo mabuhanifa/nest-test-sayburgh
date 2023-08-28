@@ -1,20 +1,28 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable, forwardRef } from '@nestjs/common';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { In, Repository } from 'typeorm';
+import { CommunityService } from 'src/community/community.service';
+import { Community } from 'src/community/entities/community.entity';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User)
-    private userRepository: Repository<User>,
+    private readonly userRepository: Repository<User>,
+    @Inject(forwardRef(() => CommunityService))
+    private readonly communityService: CommunityService,
   ) {}
 
   async create(createUserInput: CreateUserInput) {
     const user = new User();
     user.name = createUserInput.name;
+    const communities: Community[] = await this.communityService.findAllByID(
+      createUserInput.communities,
+    );
+    user.communities = communities;
     return this.userRepository.save(user);
   }
 
@@ -23,7 +31,7 @@ export class UserService {
   }
 
   async findAllByID(id: number[]): Promise<User[]> {
-    return this.userRepository.findBy({ id: In(id) });
+    return await this.userRepository.findBy({ id: In(id) });
   }
 
   findOne(id: number) {

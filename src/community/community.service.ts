@@ -3,7 +3,7 @@ import { CreateCommunityInput } from './dto/create-community.input';
 import { UpdateCommunityInput } from './dto/update-community.input';
 import { Community } from './entities/community.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { UserService } from 'src/user/user.service';
 import { User } from 'src/user/entities/user.entity';
 
@@ -31,6 +31,10 @@ export class CommunityService {
 
   findAll() {
     return this.communityRepository.find({ relations: ['users'] });
+  }
+
+  async findAllByID(id: number[]): Promise<Community[]> {
+    return await this.communityRepository.findBy({ id: In(id) });
   }
 
   findOne(id: number) {
