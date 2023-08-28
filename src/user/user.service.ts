@@ -18,11 +18,15 @@ export class UserService {
 
   async create(createUserInput: CreateUserInput) {
     const user = new User();
+
     user.name = createUserInput.name;
+
     const communities: Community[] = await this.communityService.findAllByID(
       createUserInput.communities,
     );
+
     user.communities = communities;
+
     return this.userRepository.save(user);
   }
 
@@ -34,8 +38,11 @@ export class UserService {
     return await this.userRepository.findBy({ id: In(id) });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findOne(id: number) {
+    return await this.userRepository.findOne({
+      where: { id },
+      relations: ['communities'],
+    });
   }
 
   update(id: number, updateUserInput: UpdateUserInput) {
