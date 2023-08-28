@@ -26,7 +26,7 @@ export class CommunityService {
   }
 
   findAll() {
-    return `This action returns all community`;
+    return this.communityRepository.find({ relations: ['users'] });
   }
 
   findOne(id: number) {

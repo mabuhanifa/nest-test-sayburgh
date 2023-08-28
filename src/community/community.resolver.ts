@@ -9,11 +9,13 @@ export class CommunityResolver {
   constructor(private readonly communityService: CommunityService) {}
 
   @Mutation(() => Community)
-  createCommunity(@Args('createCommunityInput') createCommunityInput: CreateCommunityInput) {
+  createCommunity(
+    @Args('createCommunityInput') createCommunityInput: CreateCommunityInput,
+  ) {
     return this.communityService.create(createCommunityInput);
   }
 
-  @Query(() => [Community], { name: 'community' })
+  @Query(() => [Community], { name: 'communities' })
   findAll() {
     return this.communityService.findAll();
   }
@@ -24,8 +26,13 @@ export class CommunityResolver {
   }
 
   @Mutation(() => Community)
-  updateCommunity(@Args('updateCommunityInput') updateCommunityInput: UpdateCommunityInput) {
-    return this.communityService.update(updateCommunityInput.id, updateCommunityInput);
+  updateCommunity(
+    @Args('updateCommunityInput') updateCommunityInput: UpdateCommunityInput,
+  ) {
+    return this.communityService.update(
+      updateCommunityInput.id,
+      updateCommunityInput,
+    );
   }
 
   @Mutation(() => Community)
