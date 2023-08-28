@@ -10,6 +10,6 @@ export class CreateUserInput {
 
   @IsNotEmpty()
   @IsNumber()
-  @Field(() => [Int])
+  @Field(() => [Int], { nullable: true })
   communities: number[];
 }
