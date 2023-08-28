@@ -14,6 +14,6 @@ export class Department {
   name: string;
 
   @OneToMany(() => Employee, (employee) => employee.department)
-  @Field(() => [Employee])
+  @Field(() => [Employee], { nullable: true })
   employees: Employee[];
 }

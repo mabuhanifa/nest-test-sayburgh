@@ -9,18 +9,18 @@ import {
 } from 'typeorm';
 
 @Entity({ name: 'community' })
-@ObjectType({ description: 'This is community Object Type' })
+@ObjectType({ description: 'Object representing a community' })
 export class Community {
   @PrimaryGeneratedColumn('increment')
-  @Field(() => Int, { description: 'Example field (placeholder)' })
+  @Field(() => Int, { description: 'Unique ID of the community' })
   id: number;
 
   @Column()
   @Field(() => String)
   name: string;
 
-  @ManyToMany(() => User, (user) => user.communities)
+  @ManyToMany(() => User)
   @JoinTable()
-  @Field(() => [User])
-  user: User[];
+  @Field(() => [User], { nullable: true })
+  users: User[];
 }

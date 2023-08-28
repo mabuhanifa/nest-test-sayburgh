@@ -9,9 +9,4 @@ export class CreateCommunityInput {
   @IsString()
   @Field(() => String)
   name: string;
-
-  @IsNotEmpty()
-  @ManyToMany(() => User, (user) => user.communities)
-  @Field(() => [User])
-  user: User[];
 }

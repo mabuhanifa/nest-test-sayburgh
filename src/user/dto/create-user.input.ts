@@ -5,7 +5,7 @@ import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 export class CreateUserInput {
   @IsNotEmpty()
   @IsString()
-  @Field(() => String, { description: 'Example field (placeholder)' })
+  @Field(() => String)
   name: string;
 
   @IsNotEmpty()

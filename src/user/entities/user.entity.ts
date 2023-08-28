@@ -9,7 +9,7 @@ import {
 } from 'typeorm';
 
 @Entity({ name: 'user' })
-@ObjectType({ description: 'This is User Object Type' })
+@ObjectType({ description: 'Object representing a user' })
 export class User {
   @PrimaryGeneratedColumn('increment')
   @Field(() => Int)
@@ -19,9 +19,7 @@ export class User {
   @Field(() => String)
   name: string;
 
-  @ManyToMany(() => Community, (community) => community.user, {
-    cascade: true,
-  })
+  @ManyToMany(() => Community)
   @JoinTable()
   @Field(() => [Community])
   communities: Community[];
