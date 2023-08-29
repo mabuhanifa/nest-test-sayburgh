@@ -14,11 +14,15 @@ export class ProjectService {
     private readonly employeeService: EmployeeService,
   ) {}
 
-  create(createProjectInput: CreateProjectInput) {
+  async create(createProjectInput: CreateProjectInput) {
     const project = new Project();
     project.name = createProjectInput.name;
-    const employees = this.employeeService.findAll();
-    return this.projectRepository.save(project);
+    const employees = await this.employeeService.findAllByID(
+      createProjectInput.employees,
+    );
+    project.employees = employees;
+
+    return await this.projectRepository.save(project);
   }
 
   findAll() {

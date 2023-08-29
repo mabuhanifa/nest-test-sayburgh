@@ -11,5 +11,5 @@ export class CreateProjectInput {
   @IsNotEmpty()
   @IsNumber()
   @Field(() => [Int])
-  users: number[];
+  employees: number[];
 }
