@@ -19,8 +19,8 @@ export class Project {
   @Field(() => String)
   name: string;
 
-  // @ManyToMany(() => Employee)
-  // @JoinTable()
-  // @Field(() => [Employee])
-  // employees: Employee[];
+  @ManyToMany(() => Employee)
+  @JoinTable()
+  @Field(() => [Employee], { nullable: true })
+  employees: Employee[];
 }

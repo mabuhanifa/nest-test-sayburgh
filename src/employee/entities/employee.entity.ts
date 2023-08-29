@@ -32,8 +32,8 @@ export class Employee {
   @Field(() => Department)
   department: Department;
 
-  // @ManyToMany(() => Project)
-  // @JoinTable()
-  // @Field(() => [Project])
-  // projects: Project[];
+  @ManyToMany(() => Project)
+  @JoinTable()
+  @Field(() => [Project], { nullable: true })
+  projects: Project[];
 }
