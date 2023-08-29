@@ -1,9 +1,12 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { ContactInfo } from 'src/contact-info/entities/contact-info.entity';
 import { Department } from 'src/department/entities/department.entity';
+import { Project } from 'src/project/entities/project.entity';
 import {
   Column,
   Entity,
+  JoinTable,
+  ManyToMany,
   ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
@@ -28,4 +31,9 @@ export class Employee {
   @ManyToOne(() => Department)
   @Field(() => Department)
   department: Department;
+
+  // @ManyToMany(() => Project)
+  // @JoinTable()
+  // @Field(() => [Project])
+  // projects: Project[];
 }

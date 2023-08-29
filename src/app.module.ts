@@ -9,29 +9,30 @@ import { ContactInfoModule } from './contact-info/contact-info.module';
 import { DepartmentModule } from './department/department.module';
 import { CommunityModule } from './community/community.module';
 import { UserModule } from './user/user.module';
-import { UsersModule } from './users/users.module';
 import { ProjectModule } from './project/project.module';
 import EmployeeModule from './employee/employee.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
+
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: true,
     }),
+
     TypeOrmModule.forRoot({
       type: 'postgres',
       url: process.env.DB_URI,
       synchronize: true,
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
     }),
+
     EmployeeModule,
     ContactInfoModule,
     DepartmentModule,
     CommunityModule,
     UserModule,
-    UsersModule,
     ProjectModule,
   ],
   controllers: [AppController],

@@ -1,7 +1,10 @@
 import { InputType, Int, Field } from '@nestjs/graphql';
+import { IsNotEmpty, IsString } from 'class-validator';
 
 @InputType()
 export class CreateProjectInput {
-  @Field(() => Int, { description: 'Example field (placeholder)' })
-  exampleField: number;
+  @IsNotEmpty()
+  @IsString()
+  @Field(() => String, { description: 'Example field (placeholder)' })
+  name: string;
 }
