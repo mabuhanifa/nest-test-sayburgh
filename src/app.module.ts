@@ -10,6 +10,7 @@ import { DepartmentModule } from './department/department.module';
 import { CommunityModule } from './community/community.module';
 import { UserModule } from './user/user.module';
 import { UsersModule } from './users/users.module';
+import { ProjectModule } from './project/project.module';
 import EmployeeModule from './employee/employee.module';
 
 @Module({
@@ -31,6 +32,7 @@ import EmployeeModule from './employee/employee.module';
     CommunityModule,
     UserModule,
     UsersModule,
+    ProjectModule,
   ],
   controllers: [AppController],
   providers: [AppService],
