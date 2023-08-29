@@ -1,8 +1,15 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { Employee } from 'src/employee/entities/employee.entity';
-import { Column, JoinTable, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
-@ObjectType()
+@Entity({ name: 'project' })
+@ObjectType({ description: 'This is Project Object Type' })
 export class Project {
   @PrimaryGeneratedColumn('increment')
   @Field(() => Int)

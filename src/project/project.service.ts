@@ -1,11 +1,21 @@
 import { Injectable } from '@nestjs/common';
 import { CreateProjectInput } from './dto/create-project.input';
 import { UpdateProjectInput } from './dto/update-project.input';
+import { Project } from './entities/project.entity';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class ProjectService {
+  constructor(
+    @InjectRepository(Project)
+    private readonly projectRepository: Repository<Project>,
+  ) {}
+
   create(createProjectInput: CreateProjectInput) {
-    return 'This action adds a new project';
+    const project = new Project();
+    project.name = createProjectInput.name;
+    return this.projectRepository.save(project);
   }
 
   findAll() {

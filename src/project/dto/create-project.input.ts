@@ -5,6 +5,6 @@ import { IsNotEmpty, IsString } from 'class-validator';
 export class CreateProjectInput {
   @IsNotEmpty()
   @IsString()
-  @Field(() => String, { description: 'Example field (placeholder)' })
+  @Field(() => String)
   name: string;
 }
