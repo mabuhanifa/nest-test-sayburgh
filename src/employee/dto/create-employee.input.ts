@@ -17,4 +17,9 @@ export class CreateEmployeeInput {
   @IsNumber()
   @Field(() => Int)
   departmentId: number;
+
+  @IsNotEmpty()
+  @IsNumber()
+  @Field(() => [Int])
+  projects: number[];
 }

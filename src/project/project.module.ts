@@ -8,5 +8,6 @@ import EmployeeModule from 'src/employee/employee.module';
 @Module({
   imports: [TypeOrmModule.forFeature([Project]), EmployeeModule],
   providers: [ProjectResolver, ProjectService],
+  exports: [ProjectService],
 })
 export class ProjectModule {}

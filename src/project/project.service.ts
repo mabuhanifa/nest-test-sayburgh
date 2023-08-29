@@ -2,9 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { CreateProjectInput } from './dto/create-project.input';
 import { UpdateProjectInput } from './dto/update-project.input';
 import { Project } from './entities/project.entity';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { EmployeeService } from 'src/employee/employee.service';
+import { Employee } from 'src/employee/entities/employee.entity';
 
 @Injectable()
 export class ProjectService {
@@ -27,6 +28,10 @@ export class ProjectService {
 
   findAll() {
     return `This action returns all project`;
+  }
+
+  async findAllByID(id: number[]): Promise<Project[]> {
+    return await this.projectRepository.findBy({ id: In(id) });
   }
 
   findOne(id: number) {

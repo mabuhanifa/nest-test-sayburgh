@@ -1,10 +1,16 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Inject,
+  Injectable,
+  NotFoundException,
+  forwardRef,
+} from '@nestjs/common';
 import { CreateEmployeeInput } from './dto/create-employee.input';
 import { UpdateEmployeeInput } from './dto/update-employee.input';
 import { In, Repository } from 'typeorm';
 import { Employee } from './entities/employee.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DepartmentService } from 'src/department/department.service';
+import { ProjectService } from 'src/project/project.service';
 
 @Injectable()
 export class EmployeeService {
@@ -12,6 +18,8 @@ export class EmployeeService {
     @InjectRepository(Employee)
     private employeeRepository: Repository<Employee>,
     private departmentService: DepartmentService,
+    @Inject(forwardRef(() => ProjectService))
+    private projectService: ProjectService,
   ) {}
 
   async create(createEmployeeInput: CreateEmployeeInput) {
@@ -22,6 +30,10 @@ export class EmployeeService {
       createEmployeeInput.departmentId,
     );
     employee.department = department;
+    const projects = await this.projectService.findAllByID(
+      createEmployeeInput.projects,
+    );
+    employee.projects = projects;
     return await this.employeeRepository.save(employee);
   }
 
