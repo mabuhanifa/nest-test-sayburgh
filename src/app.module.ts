@@ -9,7 +9,6 @@ import { ContactInfoModule } from './contact-info/contact-info.module';
 import { DepartmentModule } from './department/department.module';
 import { CommunityModule } from './community/community.module';
 import { UserModule } from './user/user.module';
-import { UsersModule } from './users/users.module';
 import { ProjectModule } from './project/project.module';
 import EmployeeModule from './employee/employee.module';
 
@@ -31,7 +30,6 @@ import EmployeeModule from './employee/employee.module';
     DepartmentModule,
     CommunityModule,
     UserModule,
-    UsersModule,
     ProjectModule,
   ],
   controllers: [AppController],
