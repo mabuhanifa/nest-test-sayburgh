@@ -1,7 +1,7 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateEmployeeInput } from './dto/create-employee.input';
 import { UpdateEmployeeInput } from './dto/update-employee.input';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { Employee } from './entities/employee.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DepartmentService } from 'src/department/department.service';
@@ -27,6 +27,10 @@ export class EmployeeService {
 
   findAll() {
     return this.employeeRepository.find({});
+  }
+
+  async findAllByID(id: number[]): Promise<Employee[]> {
+    return await this.employeeRepository.findBy({ id: In(id) });
   }
 
   findOne(id: number) {

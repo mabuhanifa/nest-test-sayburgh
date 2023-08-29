@@ -8,5 +8,6 @@ import { DepartmentModule } from 'src/department/department.module';
 @Module({
   imports: [TypeOrmModule.forFeature([Employee]), DepartmentModule],
   providers: [EmployeeResolver, EmployeeService],
+  exports: [EmployeeService],
 })
 export default class EmployeeModule {}
