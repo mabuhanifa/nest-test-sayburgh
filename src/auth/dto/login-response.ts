@@ -8,4 +8,7 @@ export class LoginResponse {
 
   @Field(() => String)
   user: string;
+
+  @Field(() => String)
+  message: string;
 }

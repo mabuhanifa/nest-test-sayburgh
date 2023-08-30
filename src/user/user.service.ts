@@ -19,6 +19,7 @@ export class UserService {
 
   async create(createUserInput: CreateUserInput) {
     const user = new User();
+
     const saltOrRounds = 10;
 
     user.name = createUserInput.name;
@@ -30,6 +31,7 @@ export class UserService {
 
       user.communities = communities;
     }
+
     const hash = await bcrypt.hash(createUserInput.password, saltOrRounds);
 
     user.password = hash;

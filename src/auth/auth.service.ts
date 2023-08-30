@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { CreateAuthInput } from './dto/create-auth.input';
 import { UpdateAuthInput } from './dto/update-auth.input';
 import { UserService } from 'src/user/user.service';
@@ -27,15 +27,26 @@ export class AuthService {
 
   async login(loginUserInput: LoginUserInput) {
     const user = await this.userService.findOneByName(loginUserInput.name);
-    console.log(user);
 
-    return {
-      user: user.name,
+    const isSuccess = await bcrypt.compare(
+      loginUserInput.password,
+      user.password,
+    );
 
-      accessToken: this.jwtService.sign({
-        name: user.name,
-        sub: user.id,
-      }),
-    };
+    return isSuccess
+      ? {
+          message: 'Logged In Successfully',
+          user: user.name,
+
+          accessToken: this.jwtService.sign({
+            name: user.name,
+            sub: user.id,
+          }),
+        }
+      : {
+          message: 'Unauthorized, Log In Failed',
+          user: 'null',
+          accessToken: 'null',
+        };
   }
 }
