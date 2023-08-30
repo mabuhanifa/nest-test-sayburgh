@@ -9,6 +9,11 @@ export class CreateUserInput {
   name: string;
 
   @IsNotEmpty()
+  @IsString()
+  @Field(() => String)
+  password: string;
+
+  @IsNotEmpty()
   @IsNumber()
   @Field(() => [Int], { nullable: true })
   communities: number[];

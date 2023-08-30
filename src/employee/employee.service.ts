@@ -38,7 +38,9 @@ export class EmployeeService {
   }
 
   findAll() {
-    return this.employeeRepository.find({});
+    return this.employeeRepository.find({
+      relations: ['department', 'projects'],
+    });
   }
 
   async findAllByID(id: number[]): Promise<Employee[]> {
@@ -50,7 +52,7 @@ export class EmployeeService {
       where: {
         id,
       },
-      relations: ['department'],
+      relations: ['department', 'projects'],
     });
 
     if (!employee) {
