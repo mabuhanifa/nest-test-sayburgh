@@ -1,11 +1,9 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { CreateAuthInput } from './dto/create-auth.input';
-import { UpdateAuthInput } from './dto/update-auth.input';
+import { Injectable } from '@nestjs/common';
 import { UserService } from 'src/user/user.service';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { LoginUserInput } from './dto/login-user.input';
-import { User } from 'src/user/entities/user.entity';
+import { LoginResponse } from './dto/login-response';
 
 @Injectable()
 export class AuthService {
@@ -16,8 +14,9 @@ export class AuthService {
 
   async validateUser(name: string, password: string) {
     const user = await this.userService.findOneByName(name);
+    console.log(user);
 
-    if (user && user.password === password) {
+    if (user && (await bcrypt.compare(password, user.password))) {
       const { password, ...result } = user;
       return result;
     }
@@ -25,8 +24,16 @@ export class AuthService {
     return null;
   }
 
-  async login(loginUserInput: LoginUserInput) {
+  async login(loginUserInput: LoginUserInput): Promise<LoginResponse> {
     const user = await this.userService.findOneByName(loginUserInput.name);
+
+    if (!user) {
+      return {
+        message: 'Unauthorized, Log In Failed',
+        user: 'User does mot exist',
+        accessToken: 'null',
+      };
+    }
 
     const isSuccess = await bcrypt.compare(
       loginUserInput.password,
@@ -36,6 +43,7 @@ export class AuthService {
     return isSuccess
       ? {
           message: 'Logged In Successfully',
+
           user: user.name,
 
           accessToken: this.jwtService.sign({

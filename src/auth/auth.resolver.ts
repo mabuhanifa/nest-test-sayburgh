@@ -11,7 +11,7 @@ export class AuthResolver {
   constructor(private readonly authService: AuthService) {}
 
   @Mutation(() => LoginResponse)
-  // @UseGuards(GqlAuthGuard)
+  //@UseGuards(GqlAuthGuard)
   login(@Args('loginUserInput') loginUserInput: LoginUserInput) {
     return this.authService.login(loginUserInput);
   }

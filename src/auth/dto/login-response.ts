@@ -4,11 +4,11 @@ import { User } from 'src/user/entities/user.entity';
 @ObjectType()
 export class LoginResponse {
   @Field()
+  message: string;
+
+  @Field()
   accessToken: string;
 
   @Field(() => String)
   user: string;
-
-  @Field(() => String)
-  message: string;
 }
