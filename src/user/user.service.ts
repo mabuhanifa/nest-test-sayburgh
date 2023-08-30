@@ -45,6 +45,12 @@ export class UserService {
     });
   }
 
+  async findOneByName(name: string) {
+    return await this.userRepository.findOne({
+      where: { name },
+    });
+  }
+
   update(id: number, updateUserInput: UpdateUserInput) {
     return `This action updates a #${id} user`;
   }
