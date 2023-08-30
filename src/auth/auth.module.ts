@@ -8,6 +8,7 @@ import { UserService } from 'src/user/user.service';
 import { JwtModule, JwtService } from '@nestjs/jwt';
 import { CommunityModule } from 'src/community/community.module';
 import { CommunityService } from 'src/community/community.service';
+import { LocalStrategy } from './strategies/local-strategies';
 
 @Module({
   imports: [
@@ -17,7 +18,7 @@ import { CommunityService } from 'src/community/community.service';
     }),
     UserModule,
   ],
-  providers: [AuthResolver, AuthService, JwtService],
+  providers: [AuthResolver, AuthService, JwtService, LocalStrategy],
   exports: [AuthService],
 })
 export class AuthModule {}
