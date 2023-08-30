@@ -1,11 +1,19 @@
-import { UnauthorizedException } from '@nestjs/common';
+import { ExecutionContext, UnauthorizedException } from '@nestjs/common';
+import { GqlExecutionContext } from '@nestjs/graphql';
 import { AuthGuard } from '@nestjs/passport';
 
-export class LocalAuthGuard extends AuthGuard('local') {
-  handleRequest(err, user, info) {
-    if (err || !user) {
-      throw err || new UnauthorizedException();
-    }
-    return user;
+export class GqlAuthGuard extends AuthGuard('local') {
+  constructor() {
+    super();
+  }
+
+  getRequest(context: ExecutionContext) {
+    const ctx = GqlExecutionContext.create(context);
+
+    const request = ctx.getContext();
+
+    request.body = ctx.getArgs().loginUserInput;
+
+    return request;
   }
 }
