@@ -9,13 +9,13 @@ import { User } from 'src/user/entities/user.entity';
 export class AuthResolver {
   constructor(private readonly authService: AuthService) {}
 
-  // @Mutation(() => Auth)
-  // createAuth(@Args('createAuthInput') createAuthInput: CreateAuthInput) {
-  //   return this.authService.create(createAuthInput);
-  // }
+  @Mutation(() => Auth)
+  createAuth(@Args('createAuthInput') createAuthInput: CreateAuthInput) {
+    return this.authService;
+  }
 
-  // @Query(() => User, { name: 'userByName' })
-  // findAll() {
+  // @Query(() => User.name, { name: 'logIn' })
+  // logIn() {
   //   return this.authService.
   // }
 }
