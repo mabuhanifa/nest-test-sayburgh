@@ -19,6 +19,10 @@ export class User {
   @Field(() => String)
   name: string;
 
+  @Column()
+  @Field(() => String)
+  password: string;
+
   @ManyToMany(() => Community)
   @JoinTable()
   @Field(() => [Community], { nullable: true })

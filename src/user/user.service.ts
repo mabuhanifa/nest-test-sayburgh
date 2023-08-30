@@ -21,11 +21,15 @@ export class UserService {
 
     user.name = createUserInput.name;
 
-    const communities: Community[] = await this.communityService.findAllByID(
-      createUserInput.communities,
-    );
+    if (createUserInput.communities) {
+      const communities: Community[] = await this.communityService.findAllByID(
+        createUserInput.communities,
+      );
 
-    user.communities = communities;
+      user.communities = communities;
+    }
+
+    user.password = createUserInput.password;
 
     return this.userRepository.save(user);
   }
