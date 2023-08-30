@@ -6,6 +6,7 @@ import { User } from './entities/user.entity';
 import { In, Repository } from 'typeorm';
 import { CommunityService } from 'src/community/community.service';
 import { Community } from 'src/community/entities/community.entity';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserService {
@@ -18,6 +19,7 @@ export class UserService {
 
   async create(createUserInput: CreateUserInput) {
     const user = new User();
+    const saltOrRounds = 10;
 
     user.name = createUserInput.name;
 
@@ -28,8 +30,9 @@ export class UserService {
 
       user.communities = communities;
     }
+    const hash = await bcrypt.hash(createUserInput.password, saltOrRounds);
 
-    user.password = createUserInput.password;
+    user.password = hash;
 
     return this.userRepository.save(user);
   }
