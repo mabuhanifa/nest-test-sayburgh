@@ -5,7 +5,6 @@ import { Project } from './entities/project.entity';
 import { In, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { EmployeeService } from 'src/employee/employee.service';
-import { Employee } from 'src/employee/entities/employee.entity';
 
 @Injectable()
 export class ProjectService {

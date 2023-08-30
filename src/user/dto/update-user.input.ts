@@ -17,5 +17,5 @@ export class UpdateUserInput extends PartialType(CreateUserInput) {
   @IsNotEmpty()
   @IsNumber()
   @Field(() => [Int], { nullable: true })
-  communities: number[];
+  communities?: number[];
 }

@@ -12,6 +12,6 @@ export class CreateCommunityInput {
 
   @IsNotEmpty()
   @IsNumber()
-  @Field(() => [Int])
-  users: number[];
+  @Field(() => [Int], { nullable: true })
+  users?: number[];
 }

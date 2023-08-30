@@ -21,6 +21,6 @@ export class User {
 
   @ManyToMany(() => Community)
   @JoinTable()
-  @Field(() => [Community])
-  communities: Community[];
+  @Field(() => [Community], { nullable: true })
+  communities?: Community[];
 }
