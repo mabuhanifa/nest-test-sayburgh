@@ -20,6 +20,12 @@ import EmployeeModule from './employee/employee.module';
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: true,
+      playground: {
+        settings: {
+          'request.credentials': 'include',
+        },
+      },
+      context: ({ req, res }) => ({ req, res }),
     }),
 
     TypeOrmModule.forRoot({
