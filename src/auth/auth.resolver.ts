@@ -1,20 +1,11 @@
-import {
-  Resolver,
-  Query,
-  Mutation,
-  Args,
-  Int,
-  Context,
-  GraphQLExecutionContext,
-} from '@nestjs/graphql';
-import { AuthService } from './auth.service';
+import { Args, Context, Mutation, Resolver } from '@nestjs/graphql';
 import { Auth } from './entities/auth.entity';
+import { AuthService } from './auth.service';
+import { JwtService } from '@nestjs/jwt';
 import { LoginResponse } from './dto/login-response';
 import { LoginUserInput } from './dto/login-user.input';
-import { Res, UseGuards } from '@nestjs/common';
-import { GqlAuthGuard } from './guards/local-auth.guards';
-import { JwtService } from '@nestjs/jwt';
-import { Response } from 'express';
+import { UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from './guards/jwt-auth.guards';
 
 @Resolver(() => Auth)
 export class AuthResolver {
@@ -24,7 +15,7 @@ export class AuthResolver {
   ) {}
 
   @Mutation(() => LoginResponse)
-  //@UseGuards(GqlAuthGuard)
+  @UseGuards(JwtAuthGuard)
   login(
     @Args('loginUserInput') loginUserInput: LoginUserInput,
     @Context() context,
@@ -35,8 +26,10 @@ export class AuthResolver {
       expiresIn: '7d',
     });
 
-    console.log(context.res);
+    console.log({ user: context.user });
+
     context.res.cookie('token', refreshToken, { httpOnly: true });
+
     return this.authService.login(loginUserInput);
   }
 }
