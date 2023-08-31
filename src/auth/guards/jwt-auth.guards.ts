@@ -8,11 +8,17 @@ export class JwtAuthGuard implements CanActivate {
 
   canActivate(context: ExecutionContext): boolean {
     const ctx = GqlExecutionContext.create(context).getContext();
-    const token = ctx.req.cookies.token; // Access the 'token' cookie
+    const token = ctx.req.cookies.token;
+
+    // console.log({ token });
 
     try {
       const decoded = this.jwtService.verify(token);
-      ctx.user = decoded; // Attach the decoded user to the context
+
+      console.log({ decoded });
+
+      ctx.user = decoded;
+
       return true;
     } catch {
       return false;

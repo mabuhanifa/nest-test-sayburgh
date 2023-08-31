@@ -1,8 +1,10 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Int, Context } from '@nestjs/graphql';
 import { DepartmentService } from './department.service';
 import { Department } from './entities/department.entity';
 import { CreateDepartmentInput } from './dto/create-department.input';
 import { UpdateDepartmentInput } from './dto/update-department.input';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guards';
+import { UseGuards } from '@nestjs/common';
 
 @Resolver(() => Department)
 export class DepartmentResolver {
@@ -15,8 +17,9 @@ export class DepartmentResolver {
     return this.departmentService.create(createDepartmentInput);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Query(() => [Department], { name: 'departments' })
-  findAll() {
+  findAll(@Context() context) {
     return this.departmentService.findAll();
   }
 

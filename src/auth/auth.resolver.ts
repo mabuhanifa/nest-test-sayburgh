@@ -15,7 +15,6 @@ export class AuthResolver {
   ) {}
 
   @Mutation(() => LoginResponse)
-  @UseGuards(JwtAuthGuard)
   login(
     @Args('loginUserInput') loginUserInput: LoginUserInput,
     @Context() context,
@@ -25,8 +24,6 @@ export class AuthResolver {
     const refreshToken = this.jwtService.sign(payload, {
       expiresIn: '7d',
     });
-
-    console.log({ user: context.user });
 
     context.res.cookie('token', refreshToken, { httpOnly: true });
 
