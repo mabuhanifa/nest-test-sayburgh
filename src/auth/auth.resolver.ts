@@ -22,10 +22,27 @@ export class AuthResolver {
     const payload = { username: loginUserInput.name };
 
     const refreshToken = this.jwtService.sign(payload, {
-      expiresIn: '7d',
+      expiresIn: '60m',
     });
 
-    context.res.cookie('token', refreshToken, { httpOnly: true });
+    context.res.cookie('refreshToken', refreshToken, { httpOnly: true });
+
+    return this.authService.login(loginUserInput);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Mutation(() => LoginResponse)
+  newAccessToken(
+    @Args('loginUserInput') loginUserInput: LoginUserInput,
+    @Context() context,
+  ) {
+    const payload = { username: loginUserInput.name };
+
+    const refreshToken = this.jwtService.sign(payload, {
+      expiresIn: '60s',
+    });
+
+    context.res.cookie('refreshToken', refreshToken, { httpOnly: true });
 
     return this.authService.login(loginUserInput);
   }

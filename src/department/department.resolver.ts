@@ -19,7 +19,7 @@ export class DepartmentResolver {
 
   @UseGuards(JwtAuthGuard)
   @Query(() => [Department], { name: 'departments' })
-  findAll(@Context() context) {
+  findAll() {
     return this.departmentService.findAll();
   }
 
