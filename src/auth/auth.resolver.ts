@@ -54,4 +54,18 @@ export class AuthResolver {
       throw new ForbiddenException('Invalid access token');
     }
   }
+
+  @Mutation(() => Boolean)
+  async logout(@Context() context) {
+    try {
+      context.res.cookie('refreshToken', '', {
+        httpOnly: true,
+        expires: new Date(0),
+      });
+
+      return true;
+    } catch (error) {
+      throw new ForbiddenException('Failed to log out');
+    }
+  }
 }
