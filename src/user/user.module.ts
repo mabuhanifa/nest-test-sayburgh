@@ -6,11 +6,16 @@ import { User } from './entities/user.entity';
 import { CommunityModule } from 'src/community/community.module';
 import { CommunityService } from 'src/community/community.service';
 import { Community } from 'src/community/entities/community.entity';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([User]),
     forwardRef(() => CommunityModule),
+    JwtModule.register({
+      secret: process.env.JWT_SECRET,
+      signOptions: { expiresIn: '1h' },
+    }),
   ],
   providers: [UserResolver, UserService],
   exports: [UserService],

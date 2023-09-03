@@ -10,6 +10,7 @@ import { UseGuards } from '@nestjs/common';
 export class DepartmentResolver {
   constructor(private readonly departmentService: DepartmentService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Mutation(() => Department)
   createDepartment(
     @Args('createDepartmentInput') createDepartmentInput: CreateDepartmentInput,
@@ -17,7 +18,6 @@ export class DepartmentResolver {
     return this.departmentService.create(createDepartmentInput);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Query(() => [Department], { name: 'departments' })
   findAll() {
     return this.departmentService.findAll();
@@ -28,6 +28,7 @@ export class DepartmentResolver {
     return this.departmentService.findOne(id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Mutation(() => Department)
   updateDepartment(
     @Args('updateDepartmentInput') updateDepartmentInput: UpdateDepartmentInput,
@@ -38,6 +39,7 @@ export class DepartmentResolver {
     );
   }
 
+  @UseGuards(JwtAuthGuard)
   @Mutation(() => Department)
   removeDepartment(@Args('id', { type: () => Int }) id: number) {
     return this.departmentService.remove(id);
