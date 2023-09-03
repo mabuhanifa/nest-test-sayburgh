@@ -26,7 +26,7 @@ export class ProjectService {
   }
 
   findAll() {
-    return `This action returns all project`;
+    return this.projectRepository.find({});
   }
 
   async findAllByID(id: number[]): Promise<Project[]> {

@@ -1,4 +1,10 @@
-import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
+import {
+  Injectable,
+  CanActivate,
+  ExecutionContext,
+  UnauthorizedException,
+  ForbiddenException,
+} from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { JwtService } from '@nestjs/jwt';
 
@@ -8,22 +14,20 @@ export class JwtAuthGuard implements CanActivate {
 
   canActivate(context: ExecutionContext): boolean {
     const ctx = GqlExecutionContext.create(context).getContext();
-    const token = ctx.req.cookies.refreshToken;
-
-    console.log({ token });
+    const jwt = ctx.req.headers.authorization.split(' ')[1];
 
     try {
-      const decoded = this.jwtService.verify(token, {
+      const decoded = this.jwtService.verify(jwt, {
         secret: process.env.JWT_SECRET,
       });
 
-      console.log({ decoded }, 'decoded-jwt');
+      console.log({ decoded, jwt }, 'decoded-jwt');
 
       ctx.user = decoded;
 
       return true;
-    } catch {
-      return false;
+    } catch (error) {
+      throw new ForbiddenException('Invalid access token');
     }
   }
 }
