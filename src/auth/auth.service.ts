@@ -44,10 +44,41 @@ export class AuthService {
 
     const accessToken = this.jwtService.sign(payload, {
       secret: process.env.JWT_SECRET,
-      expiresIn: '1m',
+      expiresIn: '30s',
     });
 
     return isSuccess
+      ? {
+          message: 'Logged In Successfully',
+          user: user.name,
+          accessToken,
+        }
+      : {
+          message: 'Unauthorized, Log In Failed',
+          user: 'null',
+          accessToken: 'null',
+        };
+  }
+
+  async refreshToken(username: string): Promise<any> {
+    const user = await this.userService.findOneByName(username);
+
+    if (!user) {
+      return {
+        message: 'Unauthorized, Log In Failed',
+        user: 'User does mot exist',
+        accessToken: 'null',
+      };
+    }
+
+    const payload = { username };
+
+    const accessToken = this.jwtService.sign(payload, {
+      secret: process.env.JWT_SECRET,
+      expiresIn: '10m',
+    });
+
+    return user
       ? {
           message: 'Logged In Successfully',
           user: user.name,

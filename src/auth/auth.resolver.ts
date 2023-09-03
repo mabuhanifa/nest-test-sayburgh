@@ -4,8 +4,7 @@ import { AuthService } from './auth.service';
 import { JwtService } from '@nestjs/jwt';
 import { LoginResponse } from './dto/login-response';
 import { LoginUserInput } from './dto/login-user.input';
-import { UseGuards } from '@nestjs/common';
-import { JwtAuthGuard } from './guards/jwt-auth.guards';
+import { ForbiddenException } from '@nestjs/common';
 
 @Resolver(() => Auth)
 export class AuthResolver {
@@ -31,21 +30,28 @@ export class AuthResolver {
     return this.authService.login(loginUserInput);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Mutation(() => LoginResponse)
-  newAccessToken(
-    @Args('loginUserInput') loginUserInput: LoginUserInput,
-    @Context() context,
-  ) {
-    const payload = { username: loginUserInput.name };
+  async newAccessToken(@Context() context) {
+    try {
+      const oldRefreshToken = context.req.cookies.refreshToken;
 
-    const refreshToken = this.jwtService.sign(payload, {
-      expiresIn: '1d',
-      secret: process.env.JWT_SECRET,
-    });
+      const decoded = await this.jwtService.verify(oldRefreshToken, {
+        secret: process.env.JWT_SECRET,
+      });
 
-    context.res.cookie('refreshToken', refreshToken, { httpOnly: true });
+      const payload = { username: decoded?.username } || null;
 
-    return this.authService.login(loginUserInput);
+      const refreshToken = this.jwtService.sign(payload, {
+        expiresIn: '1d',
+        secret: process.env.JWT_SECRET,
+      });
+
+      payload &&
+        context.res.cookie('refreshToken', refreshToken, { httpOnly: true });
+
+      return await this.authService.refreshToken(payload?.username);
+    } catch (error) {
+      throw new ForbiddenException('Invalid access token');
+    }
   }
 }
