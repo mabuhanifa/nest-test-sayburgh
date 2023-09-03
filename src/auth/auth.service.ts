@@ -46,10 +46,15 @@ export class AuthService {
 
           user: user.name,
 
-          accessToken: this.jwtService.sign({
-            name: user.name,
-            sub: user.id,
-          }),
+          accessToken: this.jwtService.sign(
+            {
+              name: user.name,
+              sub: user.id,
+            },
+            {
+              expiresIn: '10s',
+            },
+          ),
         }
       : {
           message: 'Unauthorized, Log In Failed',

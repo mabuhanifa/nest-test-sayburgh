@@ -8,7 +8,7 @@ export class JwtAuthGuard implements CanActivate {
 
   canActivate(context: ExecutionContext): boolean {
     const ctx = GqlExecutionContext.create(context).getContext();
-    const token = ctx.req.cookies.token;
+    const token = ctx.req.cookies.refreshToken;
 
     // console.log({ token });
 

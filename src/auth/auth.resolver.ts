@@ -39,7 +39,7 @@ export class AuthResolver {
     const payload = { username: loginUserInput.name };
 
     const refreshToken = this.jwtService.sign(payload, {
-      expiresIn: '60s',
+      expiresIn: '1d',
     });
 
     context.res.cookie('refreshToken', refreshToken, { httpOnly: true });
