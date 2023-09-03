@@ -14,7 +14,6 @@ import { JwtModule } from '@nestjs/jwt';
     forwardRef(() => CommunityModule),
     JwtModule.register({
       secret: process.env.JWT_SECRET,
-      signOptions: { expiresIn: '1h' },
     }),
   ],
   providers: [UserResolver, UserService],
