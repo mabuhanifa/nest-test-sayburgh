@@ -10,12 +10,14 @@ export class JwtAuthGuard implements CanActivate {
     const ctx = GqlExecutionContext.create(context).getContext();
     const token = ctx.req.cookies.refreshToken;
 
-    // console.log({ token });
+    console.log({ token });
 
     try {
-      const decoded = this.jwtService.verify(token);
+      const decoded = this.jwtService.verify(token, {
+        secret: process.env.JWT_SECRET,
+      });
 
-      // console.log({ decoded });
+      console.log({ decoded }, 'decoded-jwt');
 
       ctx.user = decoded;
 

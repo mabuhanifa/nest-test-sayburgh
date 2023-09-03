@@ -23,6 +23,7 @@ export class AuthResolver {
 
     const refreshToken = this.jwtService.sign(payload, {
       expiresIn: '60m',
+      secret: process.env.JWT_SECRET,
     });
 
     context.res.cookie('refreshToken', refreshToken, { httpOnly: true });
@@ -40,6 +41,7 @@ export class AuthResolver {
 
     const refreshToken = this.jwtService.sign(payload, {
       expiresIn: '1d',
+      secret: process.env.JWT_SECRET,
     });
 
     context.res.cookie('refreshToken', refreshToken, { httpOnly: true });

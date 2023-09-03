@@ -40,21 +40,18 @@ export class AuthService {
       user.password,
     );
 
+    const payload = { username: loginUserInput.name };
+
+    const accessToken = this.jwtService.sign(payload, {
+      secret: process.env.JWT_SECRET,
+      expiresIn: '1m',
+    });
+
     return isSuccess
       ? {
           message: 'Logged In Successfully',
-
           user: user.name,
-
-          accessToken: this.jwtService.sign(
-            {
-              name: user.name,
-              sub: user.id,
-            },
-            {
-              expiresIn: '10s',
-            },
-          ),
+          accessToken,
         }
       : {
           message: 'Unauthorized, Log In Failed',

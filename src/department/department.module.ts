@@ -10,7 +10,6 @@ import { JwtModule } from '@nestjs/jwt';
     TypeOrmModule.forFeature([Department]),
     JwtModule.register({
       secret: process.env.JWT_SECRET,
-      signOptions: { expiresIn: '1h' },
     }),
   ],
   providers: [DepartmentResolver, DepartmentService],
