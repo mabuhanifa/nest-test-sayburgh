@@ -31,11 +31,13 @@ export class UserResolver {
     return this.userService.findOneByName(name);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Mutation(() => User)
   updateUser(@Args('updateUserInput') updateUserInput: UpdateUserInput) {
     return this.userService.update(updateUserInput.id, updateUserInput);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Mutation(() => User)
   removeUser(@Args('id', { type: () => Int }) id: number) {
     return this.userService.remove(id);

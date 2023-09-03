@@ -18,7 +18,6 @@ export class DepartmentResolver {
     return this.departmentService.create(createDepartmentInput);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Query(() => [Department], { name: 'departments' })
   findAll() {
     return this.departmentService.findAll();

@@ -3,13 +3,18 @@ import { ProjectService } from './project.service';
 import { Project } from './entities/project.entity';
 import { CreateProjectInput } from './dto/create-project.input';
 import { UpdateProjectInput } from './dto/update-project.input';
+import { UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guards';
 
 @Resolver(() => Project)
 export class ProjectResolver {
   constructor(private readonly projectService: ProjectService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Mutation(() => Project)
-  createProject(@Args('createProjectInput') createProjectInput: CreateProjectInput) {
+  createProject(
+    @Args('createProjectInput') createProjectInput: CreateProjectInput,
+  ) {
     return this.projectService.create(createProjectInput);
   }
 
@@ -23,11 +28,18 @@ export class ProjectResolver {
     return this.projectService.findOne(id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Mutation(() => Project)
-  updateProject(@Args('updateProjectInput') updateProjectInput: UpdateProjectInput) {
-    return this.projectService.update(updateProjectInput.id, updateProjectInput);
+  updateProject(
+    @Args('updateProjectInput') updateProjectInput: UpdateProjectInput,
+  ) {
+    return this.projectService.update(
+      updateProjectInput.id,
+      updateProjectInput,
+    );
   }
 
+  @UseGuards(JwtAuthGuard)
   @Mutation(() => Project)
   removeProject(@Args('id', { type: () => Int }) id: number) {
     return this.projectService.remove(id);

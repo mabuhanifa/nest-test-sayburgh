@@ -3,11 +3,14 @@ import { ContactInfoService } from './contact-info.service';
 import { ContactInfo } from './entities/contact-info.entity';
 import { CreateContactInfoInput } from './dto/create-contact-info.input';
 import { UpdateContactInfoInput } from './dto/update-contact-info.input';
+import { UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guards';
 
 @Resolver(() => ContactInfo)
 export class ContactInfoResolver {
   constructor(private readonly contactInfoService: ContactInfoService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Mutation(() => ContactInfo)
   createContactInfo(
     @Args('createContactInfoInput')
@@ -26,6 +29,7 @@ export class ContactInfoResolver {
     return this.contactInfoService.findOne(id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Mutation(() => ContactInfo)
   updateContactInfo(
     @Args('updateContactInfoInput')
@@ -37,6 +41,7 @@ export class ContactInfoResolver {
     );
   }
 
+  @UseGuards(JwtAuthGuard)
   @Mutation(() => ContactInfo)
   removeContactInfo(@Args('id', { type: () => Int }) id: number) {
     return this.contactInfoService.remove(id);
