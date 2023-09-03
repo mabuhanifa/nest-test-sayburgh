@@ -30,8 +30,8 @@ export class AuthService {
     if (!user) {
       return {
         message: 'Unauthorized, Log In Failed',
-        user: 'User does mot exist',
-        accessToken: 'null',
+        user: 'User does not exist',
+        accessToken: null,
       };
     }
 
@@ -40,24 +40,21 @@ export class AuthService {
       user.password,
     );
 
-    const payload = { username: loginUserInput.name };
+    if (!isSuccess) {
+      return {
+        message: 'Unauthorized, Log In Failed',
+        user: 'Password Mismatch',
+        accessToken: null,
+      };
+    }
 
+    const payload = { username: loginUserInput.name };
     const accessToken = this.jwtService.sign(payload, {
       secret: process.env.JWT_SECRET,
       expiresIn: '30s',
     });
 
-    return isSuccess
-      ? {
-          message: 'Logged In Successfully',
-          user: user.name,
-          accessToken,
-        }
-      : {
-          message: 'Unauthorized, Log In Failed',
-          user: 'null',
-          accessToken: 'null',
-        };
+    return { message: 'Login Successful', user: 'User exists', accessToken };
   }
 
   async refreshToken(username: string): Promise<any> {

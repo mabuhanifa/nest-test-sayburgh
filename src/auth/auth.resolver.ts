@@ -4,7 +4,7 @@ import { AuthService } from './auth.service';
 import { JwtService } from '@nestjs/jwt';
 import { LoginResponse } from './dto/login-response';
 import { LoginUserInput } from './dto/login-user.input';
-import { ForbiddenException } from '@nestjs/common';
+import { ForbiddenException, UnauthorizedException } from '@nestjs/common';
 
 @Resolver(() => Auth)
 export class AuthResolver {
@@ -14,20 +14,30 @@ export class AuthResolver {
   ) {}
 
   @Mutation(() => LoginResponse)
-  login(
+  async login(
     @Args('loginUserInput') loginUserInput: LoginUserInput,
     @Context() context,
   ) {
-    const payload = { username: loginUserInput.name };
+    try {
+      const result = await this.authService.login(loginUserInput);
 
-    const refreshToken = this.jwtService.sign(payload, {
-      expiresIn: '60m',
-      secret: process.env.JWT_SECRET,
-    });
+      if (!result.accessToken) {
+        throw new UnauthorizedException('Login Failed');
+      }
 
-    context.res.cookie('refreshToken', refreshToken, { httpOnly: true });
+      const payload = { username: loginUserInput.name };
 
-    return this.authService.login(loginUserInput);
+      const refreshToken = this.jwtService.sign(payload, {
+        expiresIn: '60m',
+        secret: process.env.JWT_SECRET,
+      });
+
+      context.res.cookie('refreshToken', refreshToken, { httpOnly: true });
+
+      return result;
+    } catch (error) {
+      throw new UnauthorizedException(error.message);
+    }
   }
 
   @Mutation(() => LoginResponse)
@@ -39,7 +49,7 @@ export class AuthResolver {
         secret: process.env.JWT_SECRET,
       });
 
-      const payload = { username: decoded?.username } || null;
+      const payload = { username: decoded?.username };
 
       const refreshToken = this.jwtService.sign(payload, {
         expiresIn: '1d',

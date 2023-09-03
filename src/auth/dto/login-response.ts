@@ -7,7 +7,7 @@ export class LoginResponse {
   message: string;
 
   @Field()
-  accessToken: string;
+  accessToken: string | null;
 
   @Field(() => String)
   user: string;
